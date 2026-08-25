@@ -8,6 +8,8 @@ Reference architecture and implementation guide for integrating **F5 SSL Orchest
 
 The supplied F5/Palo Alto solution material describes a common integration pattern where F5 SSLO establishes independent TLS sessions with the client and web server, decrypts traffic, sends clear-text traffic through a Palo Alto security service, then re-encrypts it toward the destination. The material also describes health monitoring, dynamic service chaining, load balancing across security services, and several deployment modes.
 
+![HA F5 System with Firewalls](images/0.png)
+
 ### Design options
 
 | Option | Palo Alto mode | F5 service type | Primary use case |
