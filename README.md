@@ -81,6 +81,8 @@ The source presentation states that F5 intercepts HTTPS, decrypts the client-enc
 
 ### 1) L2 / Virtual Wire
 
+This deployment mode entails a single F5 system performing SSL visibility. This single system handles both decryption and re-encryption of HTTPS traffic, with an inspection zone installed between the ingress and the egress. Figure 12 shows a standalone F5 system configured to intercept, decrypt, and steer the decrypted traffic to a service pool of two Palo Alto Networks firewalls configured in L2 mode or in V-wire mode where the traffic will be inspected for hidden threats. You can also deploy the F5 system as a device sync/failover device group (including an HA pair) with a floating IP address for high availability.
+
 ```mermaid
 flowchart LR
     C[Client] -->|TLS session 1| F1[F5 SSLO HA<br/>Ingress / Decrypt]
@@ -116,6 +118,8 @@ flowchart LR
 
 ### 2) L3 Routed
 
+This deployment is similar to the solution explained above in the section called, “Configuration for a F5 BIG-IP system with a firewall in L2 or V-Wire mode.” The only difference is that the inline service type is configured as an L3 service.
+
 ```mermaid
 flowchart LR
     C[Client] -->|TLS| F1[F5 SSLO HA<br/>Decrypt]
@@ -135,6 +139,8 @@ The supplied material describes the L3 option as an inline service using a dedic
 
 ### 3) TAP / Clone
 
+In this solution option, the F5 system is configured to provide a packet-by-packet copy of both the unencrypted HTTP and decrypted HTTPS traffic to Palo Alto Networks NGFW devices wherein the IPS/WildFire is configured for TAP mode.
+
 ```mermaid
 flowchart LR
     C[Client] -->|TLS| F1[F5 SSLO<br/>Decrypt / Forward]
@@ -147,7 +153,13 @@ flowchart LR
 The supplied material describes TAP/clone as a packet-by-packet copy of unencrypted HTTP and decrypted HTTPS traffic sent to Palo Alto NGFWs operating in TAP mode. This is a visibility architecture rather than the inline blocking path.
 
 ## Alternative Architectures – Advanced Deployment Modes
+As previously explained in the Deployment Modes section, you may want to deploy a second F5 device for various reasons. This section briefly addresses these alternative architecture and the additional configuration steps needed 
+for deployment. The advanced architectures separate ingress decryption from egress re-encryption. This can be useful when the architecture needs to distribute processing or create a dedicated decryption zone.
+
 ### 1) Dual F5 HA systems with firewalls deployed as a service pool
+
+This solution is similar to the one explained in the section called, Configuring the F5 System with Palo Alto Networks Firewalls in L2 or V-Wire Mode. The only difference is that a second F5 device (the egress device) is introduced to 
+offload re-encryption from the ingress device
 
 
 ```mermaid
@@ -164,7 +176,8 @@ flowchart LR
 ![Two F5 HA systems with firewalls deployed as a service pool](images/5.png)
 
 ### 2) Two F5 systems with firewalls sandwiched in the decryption zone
-The advanced architectures separate ingress decryption from egress re-encryption. This can be useful when the architecture needs to distribute processing or create a dedicated decryption zone.
+In this case, the Palo Alto Networks firewalls are deployed as a load balancing pool between the ingress and egress F5 systems in the decrypt zone and are not part of the service chains. 
+
 
 ```mermaid
 flowchart LR
