@@ -1,0 +1,11 @@
+flowchart LR
+    C[Client] -->|TLS| F1[F5 SSLO HA<br/>Decrypt]
+    F1 -->|Clear text<br/>Dedicated subnet| R1[Service-inward L3]
+    R1 --> PA[Palo Alto NGFW Pool<br/>L3 Routed]
+    PA -->|Inspected traffic<br/>L3 route| R2[Service-outward L3]
+    R2 --> F1
+    F1 -->|Re-encrypt TLS| W[Web Server]
+    W -->|Return TLS| F1
+    F1 --> PA
+    PA --> F1
+    F1 --> C

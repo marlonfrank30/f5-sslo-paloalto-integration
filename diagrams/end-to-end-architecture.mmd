@@ -1,0 +1,16 @@
+flowchart TB
+    C[Clients] --> F1[F5 SSLO Ingress]
+    F1 --> P{SSLO Security Policy}
+    P -->|Interesting HTTPS| D[SSL Decryption]
+    P -->|Bypass| B[Bypass / Direct Path]
+    D --> SC[Service Chain]
+    SC --> PA[Palo Alto NGFW Service Pool]
+    PA --> SC
+    SC --> E[SSL Re-encryption]
+    E --> W[Internet / Web Server]
+    W --> E
+    E --> PA
+    PA --> SC
+    SC --> D
+    D --> F1
+    B --> W

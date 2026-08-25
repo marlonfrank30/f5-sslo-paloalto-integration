@@ -1,0 +1,11 @@
+flowchart LR
+    C[Client] -->|TLS| F1[F5 SSLO HA<br/>Decrypt]
+    F1 -->|Clear text| SI[Service-inward VLAN]
+    SI --> PA[Palo Alto NGFW Pool<br/>L2 Switching]
+    PA -->|Switched / inspected| SO[Service-outward VLAN]
+    SO --> F1
+    F1 -->|Re-encrypt TLS| W[Web Server]
+    W -->|Return TLS| F1
+    F1 --> PA
+    PA --> F1
+    F1 --> C

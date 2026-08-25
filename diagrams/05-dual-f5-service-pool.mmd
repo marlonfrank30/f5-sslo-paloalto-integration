@@ -1,0 +1,9 @@
+flowchart LR
+    C[Client] -->|TLS| FI[F5 SSLO HA<br/>Ingress / Decrypt]
+    FI -->|Clear text| PA[Palo Alto NGFW Service Pool]
+    PA -->|Inspected clear text| FE[F5 SSLO HA<br/>Egress / Re-encrypt]
+    FE -->|TLS| W[Web Server]
+    W -->|Return TLS| FE
+    FE --> PA
+    PA --> FI
+    FI --> C

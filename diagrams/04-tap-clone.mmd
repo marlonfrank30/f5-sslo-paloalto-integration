@@ -1,0 +1,5 @@
+flowchart LR
+    C[Client] -->|TLS| F1[F5 SSLO<br/>Decrypt / Forward]
+    F1 -->|Production flow| W[Web Server]
+    F1 -.->|Packet-by-packet copy<br/>HTTP + decrypted HTTPS| PA[Palo Alto NGFW<br/>TAP / Clone]
+    PA -->|Analysis only| SOC[Security Monitoring]

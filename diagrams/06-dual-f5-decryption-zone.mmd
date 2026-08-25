@@ -1,0 +1,13 @@
+flowchart LR
+    C[Client] -->|TLS| FI[F5 SSLO HA<br/>Ingress]
+    FI -->|Decrypted traffic| D1[Decryption Zone]
+    D1 --> PA1[Palo Alto NGFW 1]
+    D1 --> PA2[Palo Alto NGFW 2]
+    PA1 --> D2[Decryption Zone / Egress]
+    PA2 --> D2
+    D2 --> FE[F5 SSLO HA<br/>Egress / Re-encrypt]
+    FE -->|TLS| W[Web Server]
+    W --> FE
+    FE --> PA1
+    PA1 --> FI
+    FI --> C
