@@ -94,6 +94,8 @@ flowchart LR
     F1 --> C
 ```
 
+![HA F5 System with Firewalls in L2 or V-Wire Mode – Transparent Mode (Burrito Design)](images/1.png)
+
 The supplied material describes the L2/V-Wire option as a transparent deployment where the Palo Alto firewalls are placed in the inspection path. The Palo Alto documentation likewise describes virtual wire as a transparent connection between two firewall interfaces without switching or routing on those interfaces.
 
 ```mermaid
@@ -109,9 +111,6 @@ flowchart LR
     PA --> F1
     F1 --> C
 ```
-Updated Network Diagrams
-
-![HA F5 System with Firewalls in L2 or V-Wire Mode – Transparent Mode (Burrito Design)](images/1.png)
 ![HA F5 System with Firewalls in L2 – Switching Mode](images/2.png)
 
 ### L3 Routed
@@ -129,13 +128,9 @@ flowchart LR
     PA --> F1
     F1 --> C
 ```
-
-The supplied material describes the L3 option as an inline service using a dedicated subnet on the service-inward side and routed traffic returning on the service-outward side. It also notes that the Palo Alto devices can be more than one hop away, while recommending no more than two hops.
-
-Updated Network Diagrams
-
 ![F5 System with Firewalls in L3 Mode – Routed Mode ](images/3.png)
 
+The supplied material describes the L3 option as an inline service using a dedicated subnet on the service-inward side and routed traffic returning on the service-outward side. It also notes that the Palo Alto devices can be more than one hop away, while recommending no more than two hops.
 
 ### TAP / Clone
 
@@ -146,12 +141,10 @@ flowchart LR
     F1 -.->|Packet-by-packet copy<br/>HTTP + decrypted HTTPS| PA[Palo Alto NGFW<br/>TAP / Clone]
     PA -->|Analysis only| SOC[Security Monitoring]
 ```
+![F5 System with Firewalls in TAP Mode – Cloned Mode](images/4.png)
 
 The supplied material describes TAP/clone as a packet-by-packet copy of unencrypted HTTP and decrypted HTTPS traffic sent to Palo Alto NGFWs operating in TAP mode. This is a visibility architecture rather than the inline blocking path.
 
-Updated Network Diagrams
-
-![F5 System with Firewalls in TAP Mode – Cloned Mode](images/4.png)
 
 ### Dual F5
 
@@ -166,6 +159,7 @@ flowchart LR
     PA --> FI
     FI --> C
 ```
+![Two F5 HA systems with firewalls deployed as a service pool](images/5.png)
 
 The advanced architectures separate ingress decryption from egress re-encryption. This can be useful when the architecture needs to distribute processing or create a dedicated decryption zone.
 
@@ -184,10 +178,6 @@ flowchart LR
     PA1 --> FI
     FI --> C
 ```
-
-Updated Network Diagrams
-
-![Two F5 HA systems with firewalls deployed as a service pool](images/5.png)
 ![Two F5 systems with firewalls sandwiched in the decryption zone](images/6.png)
 
 ## Validation matrix
