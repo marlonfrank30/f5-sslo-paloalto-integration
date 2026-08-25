@@ -77,8 +77,9 @@ The source presentation states that F5 intercepts HTTPS, decrypts the client-enc
 10. Test failure of each Palo Alto member and confirm SSLO health monitoring/failover behavior.
 
 ## Important design notes
+## Deployment Modes
 
-### L2 / Virtual Wire
+### 1) L2 / Virtual Wire
 
 ```mermaid
 flowchart LR
@@ -113,7 +114,7 @@ flowchart LR
 ```
 ![HA F5 System with Firewalls in L2 – Switching Mode](images/2.png)
 
-### L3 Routed
+### 2) L3 Routed
 
 ```mermaid
 flowchart LR
@@ -132,7 +133,7 @@ flowchart LR
 
 The supplied material describes the L3 option as an inline service using a dedicated subnet on the service-inward side and routed traffic returning on the service-outward side. It also notes that the Palo Alto devices can be more than one hop away, while recommending no more than two hops.
 
-### TAP / Clone
+### 3) TAP / Clone
 
 ```mermaid
 flowchart LR
@@ -145,8 +146,9 @@ flowchart LR
 
 The supplied material describes TAP/clone as a packet-by-packet copy of unencrypted HTTP and decrypted HTTPS traffic sent to Palo Alto NGFWs operating in TAP mode. This is a visibility architecture rather than the inline blocking path.
 
+## Alternative Architectures – Advanced Deployment Modes
+### 1) Dual F5 HA systems with firewalls deployed as a service pool
 
-### Dual F5
 
 ```mermaid
 flowchart LR
@@ -161,6 +163,7 @@ flowchart LR
 ```
 ![Two F5 HA systems with firewalls deployed as a service pool](images/5.png)
 
+### 2) Two F5 systems with firewalls sandwiched in the decryption zone
 The advanced architectures separate ingress decryption from egress re-encryption. This can be useful when the architecture needs to distribute processing or create a dedicated decryption zone.
 
 ```mermaid
